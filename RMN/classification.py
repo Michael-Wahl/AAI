@@ -6,11 +6,15 @@ import os
 from rmn import RMN
 import cv2
 import json
+from PIL import Image
 
 # input and output directories
 dirname = os.path.dirname(__file__)
 inputfolder = os.path.join(dirname, 'input')
 outputfolder = os.path.join(dirname, 'output')
+facefolder = os.path.join(dirname, 'faces')
+
+input_path = os.getcwd() + '\input'
 
 m = RMN()
 
@@ -37,3 +41,23 @@ for filename in os.listdir(inputfolder):
 print(results_mapping)
 with open(f'{outputfolder}/mapping.json', 'w') as file:
     json.dump(results_mapping, file, indent=4)
+
+#loading file to cut out faces
+
+with open('output/mapping.json', 'r') as file:
+    map_file = json.load(file)
+
+for im in map_file:
+     facelst = map_file[im]
+     image = Image.open(input_path+'/'+im)
+     i = 0
+
+     #cutting out each face in picture
+
+     for face in facelst:
+         face_dic = facelst[i]
+         face_im = image.crop((face_dic['xmin'],face_dic['ymin'],face_dic['xmax'],face_dic['ymax']))
+         face_im.save(facefolder+'/'+str(i)+'_'+im)
+         i+=1
+
+

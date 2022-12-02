@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import PySimpleGUI as sg
 from PIL import Image
 import io
@@ -17,19 +18,20 @@ file_types = [("JPEG (*.jpg)", "*.jpg"),
 
 emo_dic = {'-ANGRY-': 'angry', '-DISGUST-': 'disgust', '-FEAR-': 'fear', '-HAPPY-': 'happy', '-NEUTRAL-': 'neutral','-SAD-':'sad', '-SURPRISED-': 'surprised'}
 
+
 # functions handling windows
 
 def gamemodes_f():
     gamemodes_lay = [[sg.Text("Welchen Spielmodi?")],
                      [sg.Button('Emotionsbestimmung', key='-EMOTIONMODE-'), sg.Button('Hintergrund', key='-BACKGROUNDMODE-')],
                      [sg.Text(size=(40, 1), key='-OUTPUT-')],
-                     [sg.Button('Ok'), sg.Button('Quit')]]
+                     [sg.Button('Ok'), sg.Button('Beenden', key = '-QUIT-')]]
 
     gamemodes_win = sg.Window('Spielmodi', gamemodes_lay)
 
     while True:
         event, values = gamemodes_win.read()
-        if event in (None, 'Quit'):
+        if event in (None, '-QUIT-'):
             break
         elif event == '-EMOTIONMODE-':
             emotionmode_f()
@@ -41,13 +43,13 @@ def gamemodes_f():
 
 
 def random_image():
-    input_path = os.getcwd() + '\input'
+    input_path = os.getcwd() + '\\faces'
     image_file = random.choice(os.listdir(input_path))
     # image_path = sg.popup_get_file('Open', no_window=True)
     image = Image.open(input_path + '\\' + image_file)
 
     #image size
-    image.thumbnail((400, 400))
+    image.thumbnail((600, 600))
 
     # handling different formats than PNG
     bio = io.BytesIO()
@@ -57,7 +59,10 @@ def random_image():
     return bio.getvalue(), image_file
 
 def check_emotion(image_file, event):
-    emo_label = obj[image_file][0]['emo_label']
+    i = int(image_file[0])
+    original_im = image_file[2:]
+
+    emo_label = obj[original_im][i]['emo_label']
     if emo_label == emo_dic[event]:
         return True
     return False
@@ -78,15 +83,14 @@ def emotionmode_f():
     image_col = sg.Column([[sg.Image(image, key = '-IMAGE-')]])
     emotion_lay = [[sg.Text("Welche Emotion wird hier gezegt?")],
                    [emotion_col, image_col],
-                   [sg.Text(visible = False, enable_events=True, key = '-VALID-'), sg.Button('Nächstes', key = '-NEXT-') ,sg.Button('Beenden', key = '-QUIT-')]]
+                   [sg.Text(visible = False, enable_events=True, key = '-VALID-'), sg.Button('Nächstes', key = '-NEXT-'), sg.Button('Beenden', key = '-QUIT-')]]
 
-    #original = Image.open(image_path)
     emotionmode_win = sg.Window('Emotionszuordnung', emotion_lay)
 
 
     while True:
         event, values = emotionmode_win.read(timeout = 50)
-        #todo: function to load picture
+
         if event in (None, '-QUIT-'):
             break
         elif event in ('-ANGRY-','-DISGUST-','-FEAR-','-HAPPY-','-NEUTRAL-','-SAD-','-SURPRISED-'):
@@ -131,7 +135,7 @@ def backgroundmode_f():
 welcome_lay = [[sg.Text("Wie heißt du?")],
                [sg.Input(key='-INPUT-')],
                [sg.Text(size=(40, 1), key='-OUTPUT-')],
-               [sg.Button('Ok'), sg.Button('Akzeptieren', key='-ACCEPT-'), sg.Button('Quit')]]
+               [sg.Button('Ok'), sg.Button('Akzeptieren', key='-ACCEPT-'), sg.Button('Beenden', key = '-QUIT-')]]
 
 
 # Create the window
@@ -141,7 +145,7 @@ welc_win = sg.Window('Window Title', welcome_lay)
 while True:
     event, values = welc_win.read()
     # See if user wants to quit or window was closed
-    if event in (None, 'Quit'):
+    if event in (None, '-QUIT-'):
         break
 
     welc_win['-OUTPUT-'].update('Hallo ' + values['-INPUT-'] + "! Willkommen zu Emotionen spielend lernen")
@@ -153,4 +157,7 @@ while True:
 welc_win.close()
 
 
-#todo: Köpfe ausschneiden, wie mit Gruppenbilder umgehen?
+#todo: Köpfe ausschneiden (Max)
+#todo: Bilder selbst hochladen + Adminfenster (Van)
+# Webcam (Michael)
+#todo: Hintergründe Spielmodus (Lydia)
