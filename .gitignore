@@ -1,6 +1,13 @@
 /Marco/data
 /Emotion-detection/src/data/train/test.csv
 
+
+/Marco/*
+/Emotion-detection/*
+/RMN/deploy.prototxt.txt
+/RMN/pretrained_ckpt
+/RMN/res10_300x300_ssd_iter_140000.caffemodel
+
 **/.DS_Store
 
 # Byte-compiled / optimized / DLL files

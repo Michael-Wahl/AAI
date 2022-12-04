@@ -57,7 +57,7 @@ for im in map_file:
      for face in facelst:
          face_dic = facelst[i]
          face_im = image.crop((face_dic['xmin'],face_dic['ymin'],face_dic['xmax'],face_dic['ymax']))
-         face_im.save(facefolder+'/'+str(i)+'_'+im)
+         face_im.save(facefolder + '\\' + str(i) + '_' + im)
          i+=1
 
 
