@@ -9,6 +9,7 @@ import uuid
 # output directory
 dirname = os.path.dirname(__file__)
 outputfolder = os.path.join(dirname, 'output')
+inputfolder = os.path.join(dirname, 'input')
 
 m = RMN()
 
@@ -41,7 +42,7 @@ def getWebcamPics(emo_label_target):
             if emo_proba > 0.97 and emo_label == emo_label_target:
                 # Generating random UUID as imagename and saving image as .png
                 IDImage = uuid.uuid4().hex
-                cv2.imwrite(f'webcam{IDImage}.png', frame)
+                cv2.imwrite(f'{inputfolder}/webcam{IDImage}.png', frame)
                 
                 x = x+1
 
