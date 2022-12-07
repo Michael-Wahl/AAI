@@ -154,12 +154,28 @@ def start_window():
         welc_win['-OUTPUT-'].update('Hallo ' + values['-INPUT-'] + "! Willkommen zu Emotionen spielend lernen")
         if event == '-ACCEPT-':
             welc_win.close()
-            upload_images()
+            # upload_images()
+            webcam_f()
             # gamemodes_f()
 
     # Finish up by removing from the screen
     welc_win.close()
 
+def webcam_f():
+    webcam_lay = [[sg.Text("Welche Emotion")],
+                  [sg.Button('Glücklich', key='-HAPPY-'), sg.Button('Nein', key='-NO-')],
+                  [sg.Button('Next', key='-NEXT-')]
+                  ]
+    webcam_win = sg.Window('Webcammodus', webcam_lay, size=(500, 500))
+
+    while True:
+        event, values = webcam_win.read()
+        if event in (None, 'Quit'):
+            break
+        if event == "-HAPPY-":
+            getWebcamPics("happy")
+        if event == "-NEXT-":
+            upload_images()
 
 def upload_images():
     upload_lay = [[sg.Text("Bitte Bilder hochladen")],
