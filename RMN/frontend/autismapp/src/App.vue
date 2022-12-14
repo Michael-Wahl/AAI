@@ -3,20 +3,20 @@
   <img alt="Vue logo" src="./assets/logo.png">
   <br>
   <GameImage/>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <GameBackground/>
 </template>
 
 <script>
 // importing our components
-import HelloWorld from './components/HelloWorld.vue'
 import GameImage from './components/GameImage.vue';
+import GameBackground from './components/GameBackground.vue';
 
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    GameImage
+    GameImage,
+    GameBackground
   }
 }
 </script>

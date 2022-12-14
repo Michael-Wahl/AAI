@@ -6,12 +6,18 @@
         <!-- @-symbol to call methods defined below in script section -->
         <button @click="checkAnswer('happy')">Happy</button>
         <button @click="checkAnswer('sad')">Sad</button>
+        <button @click="checkAnswer('angry')">Angry</button>
+        <button @click="checkAnswer('disgust')">Disgust</button>
+        <button @click="checkAnswer('neutral')">Neutral</button>
+        <button @click="checkAnswer('fear')">Fear</button>
         <button @click="nextImage" :disabled="IsNextDisabled">Next Image</button>
         <!-- variables can be accessed between the {{}} -->
         <p>Your Anwer is {{ result }}</p>
         <br />
         <!-- <input type="file" name="newFile" @change="addNewImage($event)" /> -->
-
+        <br>
+        <p>Counter: 0 Correct Images </p>
+        <br />
     </div>
 </template>
 
@@ -26,10 +32,10 @@ export default {
     data() {
         // all variables have to be declared in this list
         return {
-            result: "Not clicked yet",
+            result: "has not been chosen yet",
             currentImage: 0,
             imageSrc: [
-                {path : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Aurora_in_Abisko_near_Tornetr%C3%A4sk.jpg/640px-Aurora_in_Abisko_near_Tornetr%C3%A4sk.jpg'},
+                {path : 'https://st3.depositphotos.com/12985790/18386/i/450/depositphotos_183868734-stock-photo-sad.jpg'},
                 {path : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Berlin_Opera_UdL_asv2018-05.jpg/600px-Berlin_Opera_UdL_asv2018-05.jpg'}
             ],
             IsNextDisabled: false,
@@ -40,11 +46,11 @@ export default {
     //methods have to be defined in this list
     methods: {
         checkAnswer(value) {
-            if (value == "happy") {
-                this.result = "Correct!"
+            if (value == "sad") {
+                this.result = "is Correct!"
             }
             else {
-                this.result = "Incorrect!"
+                this.result = "is Incorrect!"
             }
         },
         nextImage() {
@@ -56,6 +62,9 @@ export default {
             }
 
         },
+        counter(){
+
+        }
         // for uploading pictures to the backend
         /* addNewImage(event) {
             console.log(event.target.files[0])
