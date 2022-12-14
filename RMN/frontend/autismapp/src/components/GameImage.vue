@@ -1,7 +1,7 @@
 <!-- html goes between the template-tags, everything has to be sourrounded by one div-element -->
 <template>
     <div>
-        <img crossorigin="anonymous" :src="imageSrc[currentImage].path">
+        <!-- <img crossorigin="anonymous" :src="imageSrc[currentImage].path">-->
         <br />
         <!-- @-symbol to call methods defined below in script section -->
         <button @click="checkAnswer('happy')">Happy</button>
@@ -54,6 +54,8 @@ export default {
             else {
                 this.IsNextDisabled = true
             }
+      
+            
 
         },
         // for uploading pictures to the backend
