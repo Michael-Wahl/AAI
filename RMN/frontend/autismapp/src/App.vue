@@ -25,6 +25,7 @@
     import HelloWorld from './components/HelloWorld.vue'
    import GameImage from './components/GameImage.vue'
     import AdminWindow from './components/AdminWindow.vue';
+import GameBackground from './components/GameBackground.vue';
 
 
 export default {
@@ -34,7 +35,9 @@ export default {
   components: {
      HelloWorld,
      GameImage,
-     AdminWindow
+     AdminWindow,
+    
+    GameBackground
         },
 /*
  * data() {
@@ -52,6 +55,8 @@ export default {
         },
     */
   
+    
+  }
 }
 </script>
 
