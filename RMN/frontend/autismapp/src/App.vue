@@ -7,6 +7,7 @@
   </div>
   <img alt="Vue logo" src="./assets/logo.png">
   <br>
+  <WebcamUploader/>
   <!--
   <GameImage/>
   <GameBackground/>
@@ -18,6 +19,7 @@
 // importing our components
 import GameImage from './components/GameImage.vue';
 import GameBackground from './components/GameBackground.vue';
+import WebcamUploader from './components/WebcamUploader.vue'
 
 
 export default {
@@ -29,7 +31,8 @@ export default {
   },
   components: {
     GameImage,
-    GameBackground
+    GameBackground,
+    WebcamUploader
   }
   
 }
