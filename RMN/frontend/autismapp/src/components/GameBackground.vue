@@ -1,4 +1,7 @@
 <template>
+  <h1> Background matching </h1>
+
+  <h3> Does the emotion fit the background? </h3>
     <div class="emotion-game">
       <div class="face-container">
         <img :src="faceImage" alt="face" />

@@ -1,7 +1,10 @@
 <!-- html goes between the template-tags, everything has to be sourrounded by one div-element -->
 <template>
     <div>
-        <!-- <img crossorigin="anonymous" :src="imageSrc[currentImage].path">-->
+        <h1> Emotion guessing </h1>
+
+        <h3> What emotion is shown here? </h3>
+        <img crossorigin="anonymous" :src="imageSrc[currentImage].path">
         <br />
         <!-- @-symbol to call methods defined below in script section -->
         <button @click="checkAnswer('happy')">Happy</button>
@@ -16,7 +19,7 @@
         <br />
         <!-- <input type="file" name="newFile" @change="addNewImage($event)" /> -->
         <br>
-        <p>Counter: 0 Correct Images </p>
+        <p> Counter: 0 Correct Images </p>
         <br />
     </div>
 </template>
