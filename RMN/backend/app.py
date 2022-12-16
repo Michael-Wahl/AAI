@@ -4,9 +4,15 @@ import os
 import base64
 import uuid
 
+from classification import classify_image
+
 app = Flask(__name__)
 CORS(app)
 
+unclassified = []
+classified = {}
+
+# For uploading webcam pictures as json, stores them in images folder, filename gets added to unclassified array
 @app.route('/image-upload', methods=['POST'])
 def save_image():
     # Check if the request is JSON and has the 'image' key
@@ -27,6 +33,28 @@ def save_image():
         
         with open(filepath, 'wb') as f:
             f.write(image_data)
+            unclassified.append(filename)
         return f'{filename}', 200
     else:
         return 'Invalid request', 400
+
+# Classify all unclassified images files in unclassified array, save results in classified dict.
+@app.route('/classify', methods=['GET'])
+def classify():
+    if not unclassified:
+        return 'No filenames provided', 400
+  
+    for filename in unclassified:
+        filepath = os.path.join('images', filename)
+        if not os.path.exists(filepath):
+            return f'File "{filepath}" does not exist', 404
+    
+        with open(filepath, 'r') as file:
+            # Perform operation on the file
+            result = classify_image(filepath)
+            classified[filename] = result
+            print(classified)
+    
+    return classified, 200
+
+
