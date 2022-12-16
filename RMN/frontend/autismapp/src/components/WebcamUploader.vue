@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Left: Preview Life Feed, Right: Image Captured</h2>
     <video ref="video" width="640" height="480"></video>
     <canvas ref="canvas" width="640" height="480"></canvas>
     <br>
