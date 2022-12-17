@@ -9,7 +9,7 @@
   <br>
   <WebcamUploader/>
   <ClassifyButton/>
-  <EmoLookup/>
+  <BackgroundCarousel/>
   <!--
   <GameImage/>
   <GameBackground/>
@@ -22,8 +22,8 @@
 import GameImage from './components/GameImage.vue';
 import GameBackground from './components/GameBackground.vue';
 import WebcamUploader from './components/WebcamUploader.vue'
-import EmoLookup from './components/EmoLookup.vue';
 import ClassifyButton from './components/ClassifyButton.vue'
+import BackgroundCarousel from './components/BackgroundCarousel.vue';
 
 
 export default {
@@ -37,8 +37,8 @@ export default {
     GameImage,
     GameBackground,
     WebcamUploader,
-    EmoLookup, 
-    ClassifyButton
+    ClassifyButton,
+    BackgroundCarousel
 
   }
   
