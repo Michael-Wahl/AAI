@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, send_file
 from flask_cors import CORS
 import os
 import base64
@@ -73,3 +73,16 @@ def getEmotion():
 
     return 'Filename does not exist', 404
 
+# Returns the filenames of all classified images.
+@app.route('/getAllImages', methods=['GET'])
+def list_files():
+    i = list(classified.keys())
+    return (i)
+
+# Getting specifc image file based on filename
+@app.route('/getImage/<image_name>')
+def get_image(image_name):
+  try:
+    return send_file('images/' + image_name, mimetype='image/jpg')
+  except Exception as e:
+    return str(e)
