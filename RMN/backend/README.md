@@ -2,7 +2,7 @@
 
 ## To run the backend, cd into RMN/backend
 
-## The first time, run 
+## The first time, run (requires Python 3.10 or older!)
 ```
 pip install -r requirements.txt
 ```
