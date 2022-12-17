@@ -9,7 +9,9 @@ from classification import classify_image
 app = Flask(__name__)
 CORS(app)
 
+# List of uploaded, but yet unclassified images.
 unclassified = []
+# Imagefilename with the result of the classification.
 classified = {}
 
 # For uploading webcam pictures as json, stores them in images folder, filename gets added to unclassified array
@@ -50,11 +52,24 @@ def classify():
             return f'File "{filepath}" does not exist', 404
     
         with open(filepath, 'r') as file:
-            # Perform operation on the file
+            # Detect emotion, append result to dict
             result = classify_image(filepath)
             classified[filename] = result
+            unclassified.remove(filename)
             print(classified)
     
     return classified, 200
 
+# Given a filename, will return the result of the classification
+@app.route('/getEmotion', methods=['POST'])
+def getEmotion():
+    if request.is_json:
+        imageFileName = request.json['string']
+
+        if imageFileName in classified:
+            emotion = classified[imageFileName]
+            print(emotion)
+            return emotion, 200
+
+    return 'Filename does not exist', 404
 

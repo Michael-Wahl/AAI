@@ -8,6 +8,8 @@
   <img alt="Vue logo" src="./assets/logo.png">
   <br>
   <WebcamUploader/>
+  <ClassifyButton/>
+  <EmoLookup/>
   <!--
   <GameImage/>
   <GameBackground/>
@@ -20,6 +22,8 @@
 import GameImage from './components/GameImage.vue';
 import GameBackground from './components/GameBackground.vue';
 import WebcamUploader from './components/WebcamUploader.vue'
+import EmoLookup from './components/EmoLookup.vue';
+import ClassifyButton from './components/ClassifyButton.vue'
 
 
 export default {
@@ -32,7 +36,10 @@ export default {
   components: {
     GameImage,
     GameBackground,
-    WebcamUploader
+    WebcamUploader,
+    EmoLookup, 
+    ClassifyButton
+
   }
   
 }
