@@ -2,6 +2,7 @@
     <form @submit.prevent="handleSubmit">
       <input v-model="imageFileName" />
       <button type="submit">Send</button>
+      <p>{{ data }}</p>
     </form>
   </template>
   
@@ -11,7 +12,8 @@
   export default {
     data() {
       return {
-        imageFileName: ''
+        imageFileName: '',
+        data: null
       }
     },
     methods: {
@@ -21,8 +23,9 @@
           { string: this.imageFileName }, 
           { headers: { 'Access-Control-Allow-Origin': '*'}});
 
+          this.data = response.data
           console.log(response.data);
-          
+
         } catch (error) {
           console.error(error);
         }
