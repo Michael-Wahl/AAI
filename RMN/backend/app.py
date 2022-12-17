@@ -60,18 +60,18 @@ def classify():
     
     return classified, 200
 
-# Given a filename, will return the result of the classification
-@app.route('/getEmotion', methods=['POST'])
-def getEmotion():
-    if request.is_json:
-        imageFileName = request.json['string']
+# # Given a filename, will return the result of the classification
+# @app.route('/getEmotion', methods=['POST'])
+# def getEmotion():
+#     if request.is_json:
+#         imageFileName = request.json['string']
 
-        if imageFileName in classified:
-            emotion = classified[imageFileName]
-            print(emotion)
-            return emotion, 200
+#         if imageFileName in classified:
+#             emotion = classified[imageFileName]
+#             print(emotion)
+#             return emotion, 200
 
-    return 'Filename does not exist', 404
+#     return 'Filename does not exist', 404
 
 # Returns the filenames of all classified images.
 @app.route('/getAllImages', methods=['GET'])
@@ -82,7 +82,13 @@ def list_files():
 # Getting specifc image file based on filename
 @app.route('/getImage/<image_name>')
 def get_image(image_name):
-  try:
-    return send_file('images/' + image_name, mimetype='image/jpg')
-  except Exception as e:
-    return str(e)
+    if not image_name == 'undefined':
+        image_path = os.path.join('images', image_name)
+        print(image_path)
+        return send_file(image_path, mimetype='image/jpeg')
+    return 'File not found', 404
+
+# Getting specifc image file based on filename
+@app.route('/getAllEmotions')
+def get_emotions():
+    return classified
