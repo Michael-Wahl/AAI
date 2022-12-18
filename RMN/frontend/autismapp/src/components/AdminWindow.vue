@@ -1,3 +1,4 @@
+
 <!-- Design the look of the admin window Autism app with html. -->
 <template>
     <div>
@@ -42,17 +43,6 @@
 <script>
 
 
-    export default {
-        data() {
-            
-
-        },
-       
-        methods: {
-
-        }
-
-    };
 
 </script>
 
@@ -77,3 +67,4 @@
         color: #42b983;
     }
 </style>
+
