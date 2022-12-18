@@ -7,7 +7,7 @@
 /RMN/deploy.prototxt.txt
 /RMN/pretrained_ckpt
 /RMN/res10_300x300_ssd_iter_140000.caffemodel
-
+/.idea
 **/.DS_Store
 
 # Byte-compiled / optimized / DLL files
