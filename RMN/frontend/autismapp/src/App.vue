@@ -3,9 +3,10 @@
     <div>
         <button v-on:click="currentComponent = 'GameImage'"> Play Emotion Guessing </button>
         <button v-on:click="currentComponent = 'GameBackground'">Play Background Game</button>
+        <button v-on:click="currentComponent = 'AdminWindow'">Go to Admin Window</button>
         <component :is="currentComponent"></component>
     </div>
-    <img alt="Vue logo" src="./assets/logo.png">
+    <!-- <img alt="Vue logo" src="./assets/logo.png">-->
     <br>
     <WebcamUploader />
     <ClassifyButton />

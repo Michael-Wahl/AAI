@@ -1,4 +1,3 @@
-
 <!-- Design the look of the admin window Autism app with html. -->
 <template>
     <div>
@@ -13,11 +12,13 @@
         <br />
 
         <!-- Button section -->
-        <button>Upload Image</button>
-        <button>Use Webcam</button>
-        <button>Delete Image</button>
-        <button>Clear All Images</button>
-        <button>Emotion Detection</button>
+        <!-- @click=functionToCall>Displayed Name-->
+        <button style="background-color: gray" class="button" type="button" @click="help()">Help</button> 
+        <button style="background-color: forestgreen" class="button" type="button" @click="uploadImage()" >Upload Image</button>
+        <button style="background-color: yellow" class="button" type="button" @click="useWebcam()">Use Webcam</button>
+        <button style="background-color: orange" class="button" type="button"  @click="deleteImage()">Delete Image</button>
+        <button style="background-color: hotpink" class="button" type="button"  @click="clearAllImages()">Clear All Images</button>
+        <button style="background-color: lightblue" class="button" type="button"  @click="detectEmotion()">Emotion Detection</button>
 
         <br />
 
@@ -31,7 +32,7 @@
         <img alt="Image" src="https://static.vecteezy.com/system/resources/thumbnails/001/622/736/original/cute-puppy-baby-dog-playing-in-the-green-park-free-video.jpg" style="width:300px;height:300px;" />
         <img alt="Image" src="http://akc.org/wp-content/uploads/2018/03/shih-tzu-with-baby-closeup-body.jpg" style="width:300px;height:300px;" />
         <img alt="Image" src="https://i.pinimg.com/originals/e7/1c/f3/e71cf3ea99b31fcdbc3b62ccceb35ae0.jpg" style="width:300px;height:300px;" />
-        <!-- variables can be accessed between the {{}} -->
+        
         <p></p>
         <br />
 
@@ -41,7 +42,36 @@
 
 <!-- Implement user interaction logic on admin window with javascript. -->
 <script>
+    export default {
+        data() {
 
+
+        },
+
+        methods: {
+            help() {
+                alert("Help!");
+            },
+        
+            uploadImage (){
+                alert("Your Image is just uploaded!");
+            },
+            useWebcam() {
+                alert("Webcam is ready!");
+            },
+            deleteImage() {
+                alert("Your image is deleted."); //todo: are you sure to delete the image?
+            },
+            clearAllImages() {
+                alert("All images are cleared."); //todo: are you sure to clear all the images?
+            },
+            detectEmotion() {
+                alert("Waiting for processing of images...");
+            }
+
+
+        }
+    }
 
 
 </script>
@@ -49,7 +79,12 @@
 
 <!-- Design code style with CSS to make the admin windwo more beautiful.-->
 <style scoped>
-    h3 {
+
+    .button {
+       font-size: 20px;
+    }  
+    h1 {
+        color: forestgreen;
         margin: 40px 0 0;
     }
 
