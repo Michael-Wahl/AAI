@@ -7,6 +7,9 @@
   </div>
   <img alt="Vue logo" src="./assets/logo.png">
   <br>
+  <WebcamUploader/>
+  <ClassifyButton/>
+  <BackgroundCarousel/>
   <!--
   <GameImage/>
   <GameBackground/>
@@ -22,6 +25,9 @@
    import GameImage from './components/GameImage.vue'
     import AdminWindow from './components/AdminWindow.vue';
 import GameBackground from './components/GameBackground.vue';
+import WebcamUploader from './components/WebcamUploader.vue'
+import ClassifyButton from './components/ClassifyButton.vue'
+import BackgroundCarousel from './components/BackgroundCarousel.vue';
 
 
 export default {
@@ -34,29 +40,12 @@ export default {
     }
   },
   components: {
-     HelloWorld,
-     GameImage,
-     AdminWindow,
-    
-    GameBackground
-        },
-/*
- * data() {
-            return {
-                selectedComponent: "HelloWorld"
-            }
-        },
- */
-   
-   /*
-    *  methods: {
-            changeStep(step: string) {
-                this.selectedComponent = step;
-            }
-        },
-    */
-  
-    
+    GameImage,
+    GameBackground,
+    WebcamUploader,
+    ClassifyButton,
+    BackgroundCarousel
+
   }
   
 }

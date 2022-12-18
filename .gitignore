@@ -7,6 +7,8 @@
 /RMN/deploy.prototxt.txt
 /RMN/pretrained_ckpt
 /RMN/res10_300x300_ssd_iter_140000.caffemodel
+/RMN/backend/images
+
 /.idea
 **/.DS_Store
 
