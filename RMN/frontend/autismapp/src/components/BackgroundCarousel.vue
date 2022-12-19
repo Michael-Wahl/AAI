@@ -8,10 +8,10 @@
         <br>
         <button @click="checkAnswer('neutral')">Neutral</button>
         <button @click="checkAnswer('happy')">Happy</button>
-        <button @click="checkAnswer('sad')">Neutral</button>
-        <button @click="checkAnswer('angry')">Happy</button>
-        <button @click="checkAnswer('disgust')">Neutral</button>
-        <button @click="checkAnswer('fear')">Happy</button>
+        <button @click="checkAnswer('sad')">Sad</button>
+        <button @click="checkAnswer('angry')">Angry</button>
+        <button @click="checkAnswer('disgust')">Disgust</button>
+        <button @click="checkAnswer('fear')">Fear</button>
         <p>Your Anwer is {{ guessResult }} !</p>
 
     </div>
