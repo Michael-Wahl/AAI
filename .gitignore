@@ -9,6 +9,8 @@
 /RMN/res10_300x300_ssd_iter_140000.caffemodel
 /RMN/backend/images
 
+deploy.prototxt.txt
+
 /.idea
 **/.DS_Store
 

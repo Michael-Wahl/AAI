@@ -92,3 +92,7 @@ def get_image(image_name):
 @app.route('/getAllEmotions')
 def get_emotions():
     return classified
+
+@app.route('/getEmotion/<image_name>')
+def get_emotion(image_name):
+    return classified[image_name]
