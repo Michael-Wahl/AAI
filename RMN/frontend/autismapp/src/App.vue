@@ -9,7 +9,6 @@
     <!-- <img alt="Vue logo" src="./assets/logo.png">-->
     <br>
     <WebcamUploader />
-    <ClassifyButton />
     <BackgroundCarousel />
     <HelloWorld />
     <AdminWindow />
@@ -30,7 +29,6 @@ import GameImage from './components/GameImage.vue'
 import AdminWindow from './components/AdminWindow.vue';
 import GameBackground from './components/GameBackground.vue';
 import WebcamUploader from './components/WebcamUploader.vue'
-import ClassifyButton from './components/ClassifyButton.vue'
 import BackgroundCarousel from './components/BackgroundCarousel.vue';
 
 
@@ -49,7 +47,6 @@ AdminWindow,
     GameImage,
     GameBackground,
     WebcamUploader,
-    ClassifyButton,
     BackgroundCarousel
 
   }
