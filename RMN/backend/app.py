@@ -85,6 +85,7 @@ def get_emotions():
 
 @app.route('/getEmotion/<image_name>')
 def get_emotion(image_name):
-    if image_name in classified:
-        return classified[image_name], 200
+    if not image_name == 'undefined':
+        if image_name in classified:
+            return classified[image_name], 200
     return "Classification for image_name not found", 404

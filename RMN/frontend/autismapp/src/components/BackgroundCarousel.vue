@@ -96,6 +96,7 @@ export default {
             }
         },
         prevImage() {
+            this.guessResult = ''
             this.currentImageIndex--
             if (this.currentImageIndex < 0) {
                 this.currentImageIndex = this.imageList.length - 1
@@ -104,6 +105,7 @@ export default {
             this.getEmotion(this.imageList[this.currentImageIndex])
         },
         nextImage() {
+            this.guessResult = ''
             this.currentImageIndex++
             if (this.currentImageIndex >= this.imageList.length) {
                 this.currentImageIndex = 0
