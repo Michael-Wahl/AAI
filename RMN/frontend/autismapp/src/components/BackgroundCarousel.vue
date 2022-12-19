@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="getImageList(); getEmotions()">Refresh</button>
+        <button @click="getImageList(); getEmotions()">Start Game</button>
         <br>
         <button @click="prevImage">Previous</button>
         <FaceCrop :imageUrl = "imageUrl" :coordinates = "currentFaceCoords" :staticImageUrl = "staticImageUrl"/>
