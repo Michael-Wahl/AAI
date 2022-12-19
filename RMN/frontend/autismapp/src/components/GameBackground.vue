@@ -14,6 +14,9 @@
       <p v-if="isAnswerCorrect">Correct!</p>
       <p v-else>Incorrect.</p>
     </div>
+  <div>
+    <button v-on:click="currentComponent = 'App'"> Menu </button>
+  </div>
 </template>
   
 <script>
