@@ -1,17 +1,11 @@
 <!-- using and arranging our components-->
 <template>
-  HELLO
-  HELLO
-  <RouterView></RouterView>
-  HELLO
   <div>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-    <RouterView />
+    <button v-on:click="currentComponent = 'GameImage'"> Play Emotion Guessing </button>
+    <button v-on:click="currentComponent = 'GameBackground'">Play Background Game</button>
+    <component v-if="currentView === 'GameImage'" v-bind:is="home"></component>
+    <component v-else-if="currentView === 'GameBackground'" v-bind:is="about"></component>
   </div>
-  <div><HomePage/></div>
- <div>HELLO</div>
- <div><router-view></router-view> </div>
  
  
 </template>
@@ -19,14 +13,34 @@
 <script>
 // importing our components
 import HomePage from './components/HomePage.vue';
-
+import GameImage from './components/GameImage.vue'
+import GameBackground from './components/GameBackground.vue';
+import WebcamUploader from './components/WebcamUploader.vue'
+import ClassifyButton from './components/ClassifyButton.vue'
+import BackgroundCarousel from './components/BackgroundCarousel.vue';
 
 
 
 export default {
     name: "App",
-    components: { HomePage }
-}
+    components: { 
+      HomePage,
+      GameImage,
+    GameBackground,
+    WebcamUploader,
+    ClassifyButton,
+    BackgroundCarousel },
+  data() {
+    return {
+      currentView: 'HomePage'
+    }
+  },
+  methods: {
+    changeView(view) {
+      this.currentView = view
+    }
+  }
+} 
 </script>
 
 <!-- optional style section for CSS -->
