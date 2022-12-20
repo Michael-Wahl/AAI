@@ -15,7 +15,8 @@
 
         <img alt="Image" src="../assets\becduc1.jpg" style="width:800px;height:500px;" /> <!--name of file or the src path should be dynamish to display different images-->
         <!--TODO:display uploaded images from paths in uploadedImages on the website-->
-        <!-- document.getElementById('imageContainer').innerHTML = `<img src="${uploadedImages[-1]}" />--> <!--TODO: Only the last uploade image is displayed here-->
+        <img src="${uploadedImages[-1]}" />
+        <!-- document.getElementById('imageContainer').innerHTML = `<img src="${uploadedImages[-1]}" /> --> <!--TODO: Only the last uploade image is displayed here-->
 
         <br />
 
@@ -24,10 +25,10 @@
         <!-- @click=functionToCall>Displayed Name-->
         <button style="background-color: gray" class="button" type="button" @click="help()">Help</button>
         <button style="background-color: forestgreen" class="button" type="button" @click="openFilePicker()">Upload Image</button>
-        <button style="background-color: yellow" class="button" type="button" @click="useWebcam()">Use Webcam</button>
+        <button style="background-color: blue" class="button" type="button" @click="useWebcam()">Use Webcam</button>
         <button style="background-color: orange" class="button" type="button" @click="deleteImage()">Delete Image</button>
         <button style="background-color: hotpink" class="button" type="button" @click="clearAllImages()">Clear All Images</button>
-        <button style="background-color: lightblue" class="button" type="button" @click="detectEmotion()">Emotion Detection</button>
+        <button style="background-color: black" class="button" type="button" @click="detectEmotion()">Emotion Detection</button>
 
         <br />
 
@@ -54,7 +55,7 @@
     export default {
         data() {
             return {
-                uploadedImages: [], // Uploaded images are stored in uploadImages array
+                uploadedImages: [], // path of uploaded images are stored in uploadImages array
             };
         },
 
