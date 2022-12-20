@@ -9,12 +9,10 @@ from classification import classify_image
 app = Flask(__name__)
 CORS(app)
 
-# List of uploaded, but yet unclassified images.
-unclassified = []
 # Imagefilename with the result of the classification.
 classified = {}
 
-# For uploading webcam pictures as json, stores them in images folder, filename gets added to unclassified array
+# For uploading webcam pictures as json, stores them in images folder and classifies emotion in dict
 @app.route('/image-upload', methods=['POST'])
 def save_image():
     # Check if the request is JSON and has the 'image' key
@@ -35,43 +33,36 @@ def save_image():
         
         with open(filepath, 'wb') as f:
             f.write(image_data)
-            unclassified.append(filename)
+
+        # Classify emotion and save to dict
+        with open(filepath, 'r') as file:
+            result = classify_image(filepath)
+            classified[filename] = result
+            #print(classified)
+
         return f'{filename}', 200
     else:
         return 'Invalid request', 400
 
-# Classify all unclassified images files in unclassified array, save results in classified dict.
-@app.route('/classify', methods=['GET'])
-def classify():
-    if not unclassified:
-        return 'No filenames provided', 400
+# # Classify all unclassified images files in unclassified array, save results in classified dict.
+# @app.route('/classify', methods=['GET'])
+# def classify():
+#     if not unclassified:
+#         return 'No filenames provided', 400
   
-    for filename in unclassified:
-        filepath = os.path.join('images', filename)
-        if not os.path.exists(filepath):
-            return f'File "{filepath}" does not exist', 404
+#     for filename in unclassified:
+#         filepath = os.path.join('images', filename)
+#         if not os.path.exists(filepath):
+#             return f'File "{filepath}" does not exist', 404
     
-        with open(filepath, 'r') as file:
-            # Detect emotion, append result to dict
-            result = classify_image(filepath)
-            classified[filename] = result
-            unclassified.remove(filename)
-            print(classified)
+#         with open(filepath, 'r') as file:
+#             # Detect emotion, append result to dict
+#             result = classify_image(filepath)
+#             classified[filename] = result
+#             unclassified.remove(filename)
+#             print(classified)
     
-    return classified, 200
-
-# # Given a filename, will return the result of the classification
-# @app.route('/getEmotion', methods=['POST'])
-# def getEmotion():
-#     if request.is_json:
-#         imageFileName = request.json['string']
-
-#         if imageFileName in classified:
-#             emotion = classified[imageFileName]
-#             print(emotion)
-#             return emotion, 200
-
-#     return 'Filename does not exist', 404
+#     return classified, 200
 
 # Returns the filenames of all classified images.
 @app.route('/getAllImages', methods=['GET'])
@@ -84,11 +75,17 @@ def list_files():
 def get_image(image_name):
     if not image_name == 'undefined':
         image_path = os.path.join('images', image_name)
-        print(image_path)
         return send_file(image_path, mimetype='image/jpeg')
     return 'File not found', 404
 
 # Getting specifc image file based on filename
 @app.route('/getAllEmotions')
 def get_emotions():
-    return classified
+    return classified, 200
+
+@app.route('/getEmotion/<image_name>')
+def get_emotion(image_name):
+    if not image_name == 'undefined':
+        if image_name in classified:
+            return classified[image_name], 200
+    return "Classification for image_name not found", 404

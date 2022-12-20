@@ -6,31 +6,42 @@
 
         <p>Here you can see your selected image.</p>
         <br />
-        <!-- <img alt="Image" src="assets/becduc1.jpg" style="width:300px;height:300px;" />-->
-        <img alt="Image" src="https://image-us.eva.vn/upload/3-2021/images/2021-09-16/image10-1631783836-199-width650height460.jpg" style="width:800px;height:500px;" />
+        <!--Tag input file allows users to choose files from their computers. Restrict types of uploaded files to handle security issues.-->
+        <input type="file" accept="image/jpg, image/png, image/jpeg" ref="fileInput" style="display: none" />
+
+        <div v-if="uploadedImages.length > 0">
+            <img v-for="image in uploadedImages" :src="image" :key="image" />
+        </div>
+
+        <img alt="Image" src="../assets\becduc1.jpg" style="width:800px;height:500px;" /> <!--name of file or the src path should be dynamish to display different images-->
+        <!--TODO:display uploaded images from paths in uploadedImages on the website-->
+        <!-- document.getElementById('imageContainer').innerHTML = `<img src="${uploadedImages[-1]}" />--> <!--TODO: Only the last uploade image is displayed here-->
 
         <br />
 
         <!-- Button section -->
-        <button>Upload Image</button>
-        <button>Use Webcam</button>
-        <button>Delete Image</button>
-        <button>Clear All Images</button>
-        <button>Emotion Detection</button>
+        <!-- When each button is selected, a javascript/python function is called to handle events. -->
+        <!-- @click=functionToCall>Displayed Name-->
+        <button style="background-color: gray" class="button" type="button" @click="help()">Help</button>
+        <button style="background-color: forestgreen" class="button" type="button" @click="openFilePicker()">Upload Image</button>
+        <button style="background-color: yellow" class="button" type="button" @click="useWebcam()">Use Webcam</button>
+        <button style="background-color: orange" class="button" type="button" @click="deleteImage()">Delete Image</button>
+        <button style="background-color: hotpink" class="button" type="button" @click="clearAllImages()">Clear All Images</button>
+        <button style="background-color: lightblue" class="button" type="button" @click="detectEmotion()">Emotion Detection</button>
 
         <br />
 
         <!-- Other images section -->
-
+        <!-- TODO: Other uploaded images in the uploadedImages are displayed here -->
         <p>Other images are placed here.</p>
         <br />
-        <!-- <img alt="Image" src="assets/baby1.jpg" style="width:300px;height:300px;" />-->
-        <img alt="Image" src="https://static.politico.com/fa/89/35a03d424d56aabc4fac494aef6b/220128-jim-justice-ap-773.jpg" style="width:300px;height:300px;" />
-        <img alt="Image" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=640:*" style="width:300px;height:300px;" />
-        <img alt="Image" src="https://static.vecteezy.com/system/resources/thumbnails/001/622/736/original/cute-puppy-baby-dog-playing-in-the-green-park-free-video.jpg" style="width:300px;height:300px;" />
-        <img alt="Image" src="http://akc.org/wp-content/uploads/2018/03/shih-tzu-with-baby-closeup-body.jpg" style="width:300px;height:300px;" />
-        <img alt="Image" src="https://i.pinimg.com/originals/e7/1c/f3/e71cf3ea99b31fcdbc3b62ccceb35ae0.jpg" style="width:300px;height:300px;" />
-        <!-- variables can be accessed between the {{}} -->
+
+        <img alt="Image" src="../assets\1.jpg" style="width:300px;height:300px;" />
+        <img alt="Image" src="../assets\baby1.jpg" style="width:300px;height:300px;" />
+        <img alt="Image" src="../assets\3.jpg" style="width:300px;height:300px;" />
+        <img alt="Image" src="../assets\6.jpg" style="width:300px;height:300px;" />
+        <img alt="Image" src="../assets\5.jpg" style="width:300px;height:300px;" />
+
         <p></p>
         <br />
 
@@ -40,26 +51,91 @@
 
 <!-- Implement user interaction logic on admin window with javascript. -->
 <script>
-
-
     export default {
         data() {
-            
-
+            return {
+                uploadedImages: [], // Uploaded images are stored in uploadImages array
+            };
         },
-       
+
         methods: {
+            help() {
+                alert("Help!"); // This method should give users the information how to use these function of the app.
+            },
+        
+            openFilePicker() {
+                // Open the file picker to choose images
+                this.$refs.fileInput.click();
+            },
+            async uploadImage() {
+                // Get the file input element
+                const input = this.$refs.fileInput;
 
-        }
+                // Check if a file was selected to handle null pointer exception
+                if (input.files.length > 0) {
+                    // Get the first selected file
+                    const file = input.files[0];
 
-    };
+                    // Create a new form data object
+                    const formData = new FormData();
+
+                    // Add the file to the form data
+                    formData.append('image', file);
+
+                    // Set up the request to interact with server
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/upload-image');
+
+                    // Set up a handler for when the request finishes
+                    xhr.onload = () => {
+                        if (xhr.status === 200) { // when status code = 200 the upload is successful
+                            console.log('Image uploaded successfully');
+                            const response = JSON.parse(xhr.responseText);
+                            this.uploadedImages.push(response.imageUrl); // save the successful uploaded image in uploadedImages
+                        } else {
+                            // An error occurred
+                            console.log('An error occurred while uploading the image');
+                        }
+                    };
+
+                    // Send the data
+                    xhr.send(formData);
+                }
+            },
+        },
+        mounted() {
+            this.$refs.fileInput.addEventListener('change', this.uploadImage);
+        },
+
+            useWebcam() {
+                alert("Webcam is ready!");
+            },
+            deleteImage() {
+                alert("Your image is deleted."); //todo: are you sure to delete the image?
+            },
+            clearAllImages() {
+                alert("All images are cleared."); //todo: are you sure to clear all the images?
+            },
+            detectEmotion() {
+                alert("Waiting for processing of images...");
+            }
+
+
+        
+    }
+
 
 </script>
 
 
 <!-- Design code style with CSS to make the admin windwo more beautiful.-->
 <style scoped>
-    h3 {
+
+    .button {
+       font-size: 20px;
+    }  
+    h1 {
+        color: forestgreen;
         margin: 40px 0 0;
     }
 
@@ -77,3 +153,4 @@
         color: #42b983;
     }
 </style>
+

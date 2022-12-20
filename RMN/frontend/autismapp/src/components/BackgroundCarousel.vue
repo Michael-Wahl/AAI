@@ -1,36 +1,17 @@
 <template>
     <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">My App</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <router-link class="nav-link" to="/">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/about">About</router-link>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <div class="container mt-5">
-      <router-view></router-view>
-    </div>
-  </div>
-
-    <div>
-        <button @click="getImageList(); getEmotions()">Refresh</button>
+        <button @click="getImageList(); getEmotions()">Start Game</button>
         <br>
         <button @click="prevImage">Previous</button>
-        <img :src="imageUrl" alt="image">
+        <FaceCrop :imageUrl = "imageUrl" :coordinates = "currentFaceCoords" :staticImageUrl = "staticImageUrl"/>
         <button @click="nextImage">Next</button>
         <br>
         <button @click="checkAnswer('neutral')">Neutral</button>
         <button @click="checkAnswer('happy')">Happy</button>
+        <button @click="checkAnswer('sad')">Sad</button>
+        <button @click="checkAnswer('angry')">Angry</button>
+        <button @click="checkAnswer('disgust')">Disgust</button>
+        <button @click="checkAnswer('fear')">Fear</button>
         <p>Your Anwer is {{ guessResult }} !</p>
 
     </div>
@@ -38,9 +19,12 @@
   
 <script>
 import axios from 'axios';
- 
+import FaceCrop from './FaceCrop.vue'
 
 export default {
+    components: {
+        FaceCrop
+    },
     data() {
         return {
             imageUrl: '',
@@ -49,12 +33,14 @@ export default {
             emotions: {},
             filename: '',
             emotion: '',
-            guessResult: ''
+            guessResult: '',
+            currentFaceCoords: [88, 250, 100, 200],
+            staticImageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Royal_Wedding_Stockholm_2010-Slottsbacken-05_edit.jpg/640px-Royal_Wedding_Stockholm_2010-Slottsbacken-05_edit.jpg",
         }
     },
     mounted() {
-        this.getImageList()
         this.getEmotions()
+        this.getImageList()
     },
     methods: {
         // Getting list of all classified images on the server
@@ -63,6 +49,7 @@ export default {
                 const response = await axios.get('http://localhost:5000/getAllImages')
                 this.imageList = response.data
                 this.getImage(this.imageList[this.currentImageIndex])
+                this.getEmotion(this.imageList[this.currentImageIndex])
             } catch (error) {
                 console.log(error)
             }
@@ -73,6 +60,20 @@ export default {
                 const response = await axios.get('http://localhost:5000/getAllEmotions')
                 this.emotions = response.data
                 console.log(this.emotions)
+            }
+            catch (error){
+                console.log(error)
+            }
+        },
+        async getEmotion(imageName) {
+            try{
+                const response = await axios.get(`http://localhost:5000/getEmotion/${imageName}`)
+                const xmax = response.data[0].xmax
+                const xmin = response.data[0].xmin
+                const ymax = response.data[0].ymax
+                const ymin = response.data[0].ymin
+                this.currentFaceCoords = [xmin, ymin, xmax, ymax]
+                console.log(this.currentFaceCoords)
             }
             catch (error){
                 console.log(error)
@@ -95,18 +96,22 @@ export default {
             }
         },
         prevImage() {
+            this.guessResult = ''
             this.currentImageIndex--
             if (this.currentImageIndex < 0) {
                 this.currentImageIndex = this.imageList.length - 1
             }
             this.getImage(this.imageList[this.currentImageIndex])
+            this.getEmotion(this.imageList[this.currentImageIndex])
         },
         nextImage() {
+            this.guessResult = ''
             this.currentImageIndex++
             if (this.currentImageIndex >= this.imageList.length) {
                 this.currentImageIndex = 0
             }
             this.getImage(this.imageList[this.currentImageIndex])
+            this.getEmotion(this.imageList[this.currentImageIndex])
         },
         // For current image, lookup what the emotion should be and adjust the anwer text
         checkAnswer(value) {

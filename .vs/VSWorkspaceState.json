@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\RMN",
+    "\\RMN\\backend",
+    "\\RMN\\frontend",
+    "\\RMN\\frontend\\autismapp",
+    "\\RMN\\frontend\\autismapp\\public",
+    "\\RMN\\frontend\\autismapp\\src",
+    "\\RMN\\frontend\\autismapp\\src\\assets",
+    "\\RMN\\frontend\\autismapp\\src\\components",
+    "\\RMN\\input"
+  ],
+  "SelectedNode": "\\RMN\\backend\\app.py",
+  "PreviewInSolutionExplorer": false
+}

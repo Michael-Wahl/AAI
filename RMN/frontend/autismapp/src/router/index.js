@@ -1,37 +1,40 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomePage from '../components/HomePage.vue'
+import BackgroundCarousel from '../components/BackgroundCarousel.vue'
+import AdminWindow from '../components/AdminWindow.vue'
+import GameImage from '../components/GameImage.vue'
 
-// importing our components
-import HomePage from '../components/HomePage.vue';
-import GameImage from '../components/GameImage.vue';
-import GameBackground from '../components/GameBackground.vue';
-//import GameMenu from './components/GameMenu.vue';
-/*
-import WebcamUploader from './components/WebcamUploader.vue'
-import ClassifyButton from './components/ClassifyButton.vue'
-import BackgroundCarousel from './components/BackgroundCarousel.vue';
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomePage
+  },
+  {
+    path: '/BackgroundCarousel',
+    name: 'BackgroundCarousel',
+    component: BackgroundCarousel
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    //component: () => import('../components/BackgroundCarousel.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminWindow
+  },
+  {
+    path: '/GameImage',
+    name: 'gameimage',
+    component: GameImage
+  },
 
-import NavigationBar from './components/NavigationBar.vue'
-*/
-
+]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-  routes: [
-    {
-        path: '/',
-        name: 'HomePage',
-        component: HomePage,
-      },
-    {
-      path: '/gameimage',
-      name: 'gameimage',
-      component: GameImage,
-    },
-    {
-      path: '/GameBackground',
-      name: 'GameBackground',
-      component: GameBackground,
-    },
-  ]
+  history: createWebHistory(process.env.BASE_URL),
+  routes
 })
+
 export default router
