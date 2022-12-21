@@ -3,6 +3,7 @@ import HomePage from '../components/HomePage.vue'
 import BackgroundCarousel from '../components/BackgroundCarousel.vue'
 import AdminWindow from '../components/AdminWindow.vue'
 import GameImage from '../components/GameImage.vue'
+import WebcamUploader from '../components/WebcamUploader.vue'
 
 const routes = [
   {
@@ -28,6 +29,12 @@ const routes = [
     path: '/GameImage',
     name: 'gameimage',
     component: GameImage
+  },
+  {
+    path: '/WebcamUploader',
+    name: 'webcamuploader',
+    component: WebcamUploader
+
   },
 
 ]
