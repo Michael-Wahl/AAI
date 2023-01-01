@@ -3,11 +3,12 @@
     <h2>Left: Preview Life Feed, Right: Image Captured</h2>
     <h3>Act out the following emotion: {{ prompts[currentPromptIndex] }}</h3>
     <h3> {{ result }}</h3>
-    <video ref="video" width="640" height="480"></video>
-    <canvas ref="canvas" width="640" height="480"></canvas>
     <br>
-    <button @click="startSendingImages">Start Sending Images</button>
-    <button @click="stopSendingImages">Stop Sending Images</button>
+    <button @click="startSendingImages">START</button>
+    <button @click="stopSendingImages">STOP</button>
+    <br>
+    <video ref="video" width="640" height="480"></video>
+    <canvas ref="canvas" width="640" height="480"></canvas>    
   </div>
 </template>
 
@@ -58,6 +59,7 @@ export default {
             console.log(this.message);
             if (this.message == 'Target matched') {
               this.result = 'Emotion recognized!'
+              this.addOverlay()
               if (this.currentPromptIndex >= this.prompts.length - 1) {
                 this.result = 'All emotions recorded. You are ready to play!'
                 this.stopSendingImages();
@@ -75,6 +77,48 @@ export default {
     },
     stopSendingImages() {
       clearInterval(this.interval);
+    },
+    addOverlay() {
+      // Get the video element
+      const videoEl = this.$refs.video;
+
+      // Create the overlay element
+      const overlayEl = document.createElement('div');
+      overlayEl.style.backgroundColor = 'green';
+      overlayEl.style.position = 'absolute';
+      overlayEl.style.top = '0';
+      overlayEl.style.left = '0';
+      overlayEl.style.width = '100%';
+      overlayEl.style.height = '100%';
+
+      // Create the checkmark icon element
+      const iconEl = document.createElement('img');
+      iconEl.src = 'https://i.imgflip.com/6hrs2v.png';
+      iconEl.style.position = 'absolute';
+      iconEl.style.top = '50%';
+      iconEl.style.left = '50%';
+      iconEl.style.transform = 'translate(-50%, -50%)';
+      iconEl.style.width = '100px';
+      iconEl.style.height = '100px';
+
+      // Add the checkmark icon to the overlay
+      overlayEl.appendChild(iconEl);
+
+      // Add the overlay to the video
+      videoEl.parentNode.insertBefore(overlayEl, videoEl.nextSibling);
+
+      // Animate the overlay
+      overlayEl.classList.add('fade-in');
+
+      // Fade out the overlay after 2 seconds
+      setTimeout(() => {
+        overlayEl.classList.add('fade-out');
+      }, 2000);
+
+      // Remove the overlay from the DOM when the fade-out animation completes
+      overlayEl.addEventListener('animationend', () => {
+        overlayEl.parentNode.removeChild(overlayEl);
+      });
     }
   },
   beforeUnmount() {
@@ -82,3 +126,31 @@ export default {
   },
 };
 </script>
+
+<style>
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0;
+  }
+}
+</style>
