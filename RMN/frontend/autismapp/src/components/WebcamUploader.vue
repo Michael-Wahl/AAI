@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Left: Preview Life Feed, Right: Image Captured</h2>
+    <h2>Record Your Emotions</h2>
     <h3>Act out the following emotion: {{ prompts[currentPromptIndex] }}</h3>
     <h3> {{ result }}</h3>
     <br>
