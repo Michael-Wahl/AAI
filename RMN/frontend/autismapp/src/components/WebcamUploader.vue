@@ -4,8 +4,7 @@
     <h3>Act out the following emotion: {{ prompts[currentPromptIndex] }}</h3>
     <h3> {{ result }}</h3>
     <br>
-    <button @click="startSendingImages">START</button>
-    <button @click="stopSendingImages">STOP</button>
+    <button @click="toggleSendingImages">{{ isSending ? 'STOP' : 'START' }}</button>
     <br>
     <video ref="video" width="640" height="480"></video>
     <canvas ref="canvas" width="640" height="480" class="hidden"></canvas>    
@@ -25,7 +24,8 @@ export default {
       message: "",
       prompts: ['happy', 'sad', 'neutral', 'angry', 'disgust', 'fear'],
       currentPromptIndex: 0,
-      result: "Emotion not recognized."
+      result: "Emotion not recognized.",
+      isSending: false
     };
   },
   mounted() {
@@ -45,6 +45,15 @@ export default {
       });
   },
   methods: {
+    //Start/Stop Toggle Button
+    toggleSendingImages() {
+      if (this.isSending) {
+        this.stopSendingImages();
+      } else {
+        this.startSendingImages();
+      }
+      this.isSending = !this.isSending;
+    },
     startSendingImages() {
       // Start taking pictures every 1 second
       this.interval = setInterval(() => {
