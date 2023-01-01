@@ -1,6 +1,8 @@
 <template>
   <div>
     <h2>Left: Preview Life Feed, Right: Image Captured</h2>
+    <h3>Act out the following emotion: {{ prompts[currentPromptIndex] }}</h3>
+    <h3> {{ result }}</h3>
     <video ref="video" width="640" height="480"></video>
     <canvas ref="canvas" width="640" height="480"></canvas>
     <br>
@@ -19,7 +21,10 @@ export default {
       video: null,
       canvas: null,
       context: null,
-      message: ""
+      message: "",
+      prompts: ['happy', 'sad', 'neutral', 'angry', 'disgust', 'fear'],
+      currentPromptIndex: 0,
+      result: "Emotion not recognized."
     };
   },
   mounted() {
@@ -46,11 +51,22 @@ export default {
 
         // Convert the canvas to a data URL and send to server using axios
         const imageData = this.canvas.toDataURL('image/png');
-        axios.post('http://127.0.0.1:5000/image-upload', { image: imageData }, 
-        { headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' } })
+        axios.post('http://127.0.0.1:5000/image-upload', { image: imageData, target: this.prompts[this.currentPromptIndex] },
+          { headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' } })
           .then(response => {
             this.message = response.data
             console.log(this.message);
+            if (this.message == 'Target matched') {
+              this.result = 'Emotion recognized!'
+              if (this.currentPromptIndex >= this.prompts.length - 1) {
+                this.result = 'All emotions recorded. You are ready to play!'
+                this.stopSendingImages();
+              }
+              else {
+                this.currentPromptIndex++;
+                this.result == 'Emotion not recognized.'
+              }
+            }
           })
           .catch(error => {
             console.error('Error sending image to server: ', error);

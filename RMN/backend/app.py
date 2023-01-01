@@ -22,6 +22,9 @@ def save_image():
         image_data = image_data[image_data.index(',') + 1:]
         image_data = base64.b64decode(image_data)
 
+        target = request.get_json()['target']
+        print(target)
+
         # Create a subfolder in the directory to store the images
         subfolder = 'images'
         if not os.path.exists(subfolder):
@@ -38,9 +41,18 @@ def save_image():
         with open(filepath, 'r') as file:
             result = classify_image(filepath)
             classified[filename] = result
-            #print(classified)
+            print(result[0].get('emo_label'))
 
-        return f'{filename}', 200
+            # Check if emotion matches
+            if result[0].get('emo_label') == target:
+                if result[0].get('emo_proba') > 0.93:
+                    return "Target matched", 200
+
+        # if emotion does not match target or proba to low, delete image file and dict entry
+        del classified[filename]
+        os.remove(filepath)
+        return 'Target not matched', 200
+        
     else:
         return 'Invalid request', 400
 
