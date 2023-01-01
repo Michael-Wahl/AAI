@@ -8,7 +8,7 @@
     <button @click="stopSendingImages">STOP</button>
     <br>
     <video ref="video" width="640" height="480"></video>
-    <canvas ref="canvas" width="640" height="480"></canvas>    
+    <canvas ref="canvas" width="640" height="480" class="hidden"></canvas>    
   </div>
 </template>
 
@@ -73,7 +73,7 @@ export default {
           .catch(error => {
             console.error('Error sending image to server: ', error);
           });
-      }, 1000);
+      }, 300);
     },
     stopSendingImages() {
       clearInterval(this.interval);
@@ -128,6 +128,10 @@ export default {
 </script>
 
 <style>
+.hidden {
+  display: none;
+}
+
 .fade-in {
   animation: fadeIn 0.5s forwards;
 }
