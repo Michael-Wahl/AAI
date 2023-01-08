@@ -5,6 +5,7 @@
     <h3> {{ result }}</h3>
     <br>
     <button @click="toggleSendingImages">{{ isSending ? 'STOP' : 'START' }}</button>
+    <button @click="toggleNextEmotion">{{ 'NEXT' }}</button>
     <br>
     <video ref="video" width="640" height="480"></video>
     <canvas ref="canvas" width="640" height="480" class="hidden"></canvas>    
@@ -23,6 +24,7 @@ export default {
       context: null,
       message: "",
       prompts: ['happy', 'sad', 'neutral', 'angry', 'disgust', 'fear'],
+      rec_prompts: [],
       currentPromptIndex: 0,
       result: "Emotion not recognized.",
       isSending: false
@@ -54,6 +56,25 @@ export default {
       }
       this.isSending = !this.isSending;
     },
+    //Next Emotion Toggle Button
+    toggleNextEmotion() {
+      if (this.isSending) {
+        if (this.currentPromptIndex++ >= this.prompts.length - 1) {
+          this.result == 'You can not skip more emotions.'
+        } else {
+          this.currentPromptIndex++;
+        }
+      } else {
+        this.result == 'Hit the start button first.'
+      }
+    },
+    isEqual(arr1, arr2) {
+      if (arr1.length !== arr2.length) return false;
+      for (let i = 0; i < arr2.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
+      }
+      return true;
+    },
     startSendingImages() {
       // Start taking pictures every 1 second
       this.interval = setInterval(() => {
@@ -67,9 +88,10 @@ export default {
             this.message = response.data
             console.log(this.message);
             if (this.message == 'Target matched') {
+              this.rec_prompts.push(this.prompts[this.currentPromptIndex])
               this.result = 'Emotion recognized!'
               this.addOverlay()
-              if (this.currentPromptIndex >= this.prompts.length - 1) {
+              if (this.isEqual(this.rec_prompts, this.prompts)) {
                 this.result = 'All emotions recorded. You are ready to play!'
                 this.stopSendingImages();
               }
