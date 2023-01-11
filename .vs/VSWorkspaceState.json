@@ -5,12 +5,12 @@
     "\\RMN\\backend",
     "\\RMN\\frontend",
     "\\RMN\\frontend\\autismapp",
-    "\\RMN\\frontend\\autismapp\\public",
     "\\RMN\\frontend\\autismapp\\src",
     "\\RMN\\frontend\\autismapp\\src\\assets",
     "\\RMN\\frontend\\autismapp\\src\\components",
+    "\\RMN\\frontend\\autismapp\\src\\router",
     "\\RMN\\input"
   ],
-  "SelectedNode": "\\RMN\\frontend\\autismapp\\src\\components\\WebcamUploader.vue",
+  "SelectedNode": "\\RMN\\frontend\\autismapp\\src\\router\\index.js",
   "PreviewInSolutionExplorer": false
 }

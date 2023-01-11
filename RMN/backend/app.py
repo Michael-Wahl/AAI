@@ -101,3 +101,35 @@ def get_emotion(image_name):
         if image_name in classified:
             return classified[image_name], 200
     return "Classification for image_name not found", 404
+
+
+"""
+Upload images from users on the server and return the paths of uploaded images.
+"""
+app.config["UPLOAD_FOLDER"] = "uploads" # define an upload folder
+app.config["ALLOWED_EXTENSIONS"] = ["jpg", "jpeg", "png"] # allowed file extensions
+
+def allowed_file(filename):
+    # Check if the file extension is in the ALLOWED_EXTENSIONS list.
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in app.config["ALLOWED_EXTENSIONS"]
+
+    # TODO debug needed
+@app.route("/upload-image", methods=["POST"])
+def upload():
+    if "image" not in request.files:
+        return jsonify({"error": "No file found"}), 400
+
+    file = request.files["image"]
+    if file.filename == "":
+        return jsonify({"error": "No file selected"}), 400
+
+    if not allowed_file(file.filename):
+        return jsonify({"error": f"File type not allowed. Allowed types: {app.config['ALLOWED_EXTENSIONS']}"}), 400
+    #check if the upload folder exists, if not create it.
+    if not os.path.exists(app.config["UPLOAD_FOLDER"]):
+        os.makedirs(app.config["UPLOAD_FOLDER"])
+    #save the file to the filesystem
+    file.save(f'{app.config["UPLOAD_FOLDER"]}/{file.filename}')
+    path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+    return jsonify({"image_path": path})
+

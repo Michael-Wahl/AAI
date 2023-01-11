@@ -16,7 +16,7 @@
         <img alt="Image" src="../assets\becduc1.jpg" style="width:800px;height:500px;" /> <!--name of file or the src path should be dynamish to display different images-->
         <!--TODO:display uploaded images from paths in uploadedImages on the website-->
         <img src="${uploadedImages[-1]}" />
-        <!-- document.getElementById('imageContainer').innerHTML = `<img src="${uploadedImages[-1]}" /> --> <!--TODO: Only the last uploade image is displayed here-->
+        <!--TODO: Only the last uploade image is displayed here-->
 
         <br />
 
@@ -25,6 +25,7 @@
         <!-- @click=functionToCall>Displayed Name-->
         <button style="background-color: gray" class="button" type="button" @click="help()">Help</button>
         <button style="background-color: forestgreen" class="button" type="button" @click="openFilePicker()">Upload Image</button>
+        
         <button style="background-color: blue" class="button" type="button" @click="useWebcam()">Use Webcam</button>
         <button style="background-color: orange" class="button" type="button" @click="deleteImage()">Delete Image</button>
         <button style="background-color: hotpink" class="button" type="button" @click="clearAllImages()">Clear All Images</button>
@@ -63,39 +64,45 @@
             help() {
                 alert("Help!"); // This method should give users the information how to use these function of the app.
             },
+
+    
         
             openFilePicker() {
                 // Open the file picker to choose images
                 this.$refs.fileInput.click();
             },
+    // TODO: debug needed
             async uploadImage() {
                 // Get the file input element
-                const input = this.$refs.fileInput;
+                let input = this.$refs.fileInput.files[0];
 
                 // Check if a file was selected to handle null pointer exception
                 if (input.files.length > 0) {
                     // Get the first selected file
-                    const file = input.files[0];
+                    let file = input.files[0];
 
                     // Create a new form data object
-                    const formData = new FormData();
+                    let formData = new FormData();
 
                     // Add the file to the form data
                     formData.append('image', file);
 
                     // Set up the request to interact with server
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/upload-image');
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'http://127.0.0.1:5000/upload-image',true);
 
                     // Set up a handler for when the request finishes
                     xhr.onload = () => {
                         if (xhr.status === 200) { // when status code = 200 the upload is successful
                             console.log('Image uploaded successfully');
-                            const response = JSON.parse(xhr.responseText);
-                            this.uploadedImages.push(response.imageUrl); // save the successful uploaded image in uploadedImages
+                            let response = JSON.parse(xhr.responseText);
+                            // save the paths of successful uploaded images in uploadedImages array
+                            // This is the value of the json response with key = image_path
+                            this.uploadedImages.push(response.image_path); 
                         } else {
                             // An error occurred
                             console.log('An error occurred while uploading the image');
+                            console.error(xhr.responseText)
                         }
                     };
 
@@ -104,9 +111,11 @@
                 }
             },
         },
-        mounted() {
+       /*
+        *mounted() {
             this.$refs.fileInput.addEventListener('change', this.uploadImage);
         },
+        */
 
             useWebcam() {
                 alert("Webcam is ready!");
